@@ -1,13 +1,9 @@
-import numpy as np
 import torch as tr
-import torch.nn as nn
-import torch.optim as optimizer
-import sys
 import os
 from matplotlib import image
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader, Dataset
-from torchvision.transforms import CenterCrop, Compose
+from torchvision.transforms import functional as tvF
 
 
 class Unetdataload():
@@ -54,11 +50,18 @@ class PicDataset(Dataset):
         label_file_path = os.path.join(self.data_path, self.file_name_list[idx])
         data = image.imread(data_file_path)
         label = image.imread(label_file_path)
+        data = tvF.to_tensor(data)
+        label = tvF.to_tensor(label)
         if self.transform is not None:
-            data = tr.autograd.variable(data)
-            label = tr.autograd.variable(label)
+            data = tr.tensor(data)
+            label = tr.tensor(label)
+            data = self.transform(data)
             label = self.transform(label)
         else:
-            data = tr.autograd.variable(data)
-            label = tr.autograd.variable(label)
-        return (data, label)
+            data = tr.tensor(data)
+            label = tr.tensor(label)
+
+        data = data.view(1,512, 512)
+        label = tvF.center_crop(label, 322)
+
+        return data, label

@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Image segmentation/U-net" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Image segmentation/U-net/.ipynb_checkpoints" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (MachineLearning)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (cs224n)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
