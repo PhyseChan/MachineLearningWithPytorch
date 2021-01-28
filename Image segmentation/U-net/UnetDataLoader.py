@@ -50,11 +50,9 @@ class PicDataset(Dataset):
         label_file_path = os.path.join(self.data_path, self.file_name_list[idx])
         data = image.imread(data_file_path)
         label = image.imread(label_file_path)
-        data = tvF.to_tensor(data)
-        label = tvF.to_tensor(label)
+        # data = tvF.to_tensor(data)
+        # label = tvF.to_tensor(label)
         if self.transform is not None:
-            data = tr.tensor(data)
-            label = tr.tensor(label)
             data = self.transform(data)
             label = self.transform(label)
         else:
