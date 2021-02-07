@@ -4,7 +4,7 @@ import torch as tr
 
 class ConvLayer(nn.Module):
     def __init__(self, in_channel, out_channel):
-        super(self, ConvLayer).__init__()
+        super(ConvLayer, self).__init__()
         self.in_channel = in_channel
         self.out_channel = out_channel
         self.conv_layer = nn.Sequential(
@@ -22,8 +22,8 @@ class ConvLayer(nn.Module):
 
 
 class DownSample(nn.Module):
-    def __int__(self):
-        super(DownSample, self).__int__()
+    def __init__(self):
+        super(DownSample, self).__init__()
         self.down = nn.MaxPool2d(2)
 
     def forward(self, x):
@@ -34,7 +34,7 @@ class DownSample(nn.Module):
 class UpSample(nn.Module):
     def __init__(self, in_channel, out_channel):
         super(UpSample, self).__init__()
-        self.up = nn.ConvTranspose2d(in_channel, out_channel)
+        self.up = nn.ConvTranspose2d(in_channel, out_channel, 2)
 
     def forward(self, x):
         x = self.up(x)
@@ -45,14 +45,14 @@ class Cat(nn.Module):
     def __init__(self):
         super(Cat, self).__init__()
 
-    def forward(self, x_from_down, x_from_up):
-        x_from_down_width, x_from_down_length = x_from_down.shape[2], x_from_down.shape[1]
-        x_from_up_width, x_from_up_length = x_from_up.shape[2], x_from_up.shape[1]
+    def forward(self, x_from_up, x_from_down):
+        x_from_down_width, x_from_down_length = x_from_down.shape[3], x_from_down.shape[2]
+        x_from_up_width, x_from_up_length = x_from_up.shape[3], x_from_up.shape[2]
         diff_width = x_from_down_width - x_from_up_width
         diff_length = x_from_down_length - x_from_up_length
         x_from_up = F.pad(x_from_up, [
             diff_width // 2, diff_width - diff_width // 2,
             diff_length // 2, diff_length - diff_length // 2
         ])
-        x_from_up = tr.cat([x_from_up, x_from_down], dim=0)
+        x_from_up = tr.cat([x_from_up, x_from_down], dim=1)
         return x_from_up
