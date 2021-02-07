@@ -1,19 +1,13 @@
 import numpy as np
 import torch as tr
-import torch.nn as nn
-import torch.optim as optimizer
-import sys
-import os
-from matplotlib import image
-import matplotlib.pyplot as plt
-from torchvision.transforms import functional as tvF
 
 class UpSampling:
 
     def cat(self, target_image, cat_image):
         target_image_len = target_image.shape[-1]
-        #cat_layer_len = cat_image.shape[-1]
-        croppedimg = tvF.center_crop(cat_image, target_image_len)
+        cat_image_len = cat_image.shape[-1]
+        croplen = int((cat_image_len - target_image_len)/2)
+        croppedimg = cat_image[:, :, croplen:croplen+target_image_len, croplen:croplen+target_image_len]
         processed_image = tr.cat([croppedimg, target_image], dim=1)
         return processed_image
 

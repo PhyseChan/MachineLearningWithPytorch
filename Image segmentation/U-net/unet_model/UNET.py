@@ -1,5 +1,4 @@
 import torch.nn as nn
-import torch as tr
 import unet_model.Sampling as sampling
 
 
@@ -61,9 +60,10 @@ class Unet(nn.Module):
         x3d = self.down3(x2d)
         x4d = self.down4(x3d)
         x_m = self.middle(x4d)
-        x = self.up4(self.cat4(x_m, x4d))
+        x = self.up4(self.cat4(x_m, x4d)) #1024
         x = self.up3(self.cat3(x, x3d))
         x = self.up2(self.cat2(x, x2d))
         x = self.up1(self.cat1(x, x1d))
         x = self.output(x)
+        x = nn.functional.pad(x,[5,5,5,5])
         return x
