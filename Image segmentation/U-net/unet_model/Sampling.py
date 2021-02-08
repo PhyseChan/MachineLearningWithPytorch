@@ -2,6 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch as tr
 
+
 class ConvLayer(nn.Module):
     def __init__(self, in_channel, out_channel):
         super(ConvLayer, self).__init__()
@@ -20,7 +21,6 @@ class ConvLayer(nn.Module):
         x = self.conv_layer(x)
         return x
 
-
 class DownSample(nn.Module):
     def __init__(self):
         super(DownSample, self).__init__()
@@ -30,7 +30,6 @@ class DownSample(nn.Module):
         x = self.down(x)
         return x
 
-
 class UpSample(nn.Module):
     def __init__(self, in_channel, out_channel):
         super(UpSample, self).__init__()
@@ -39,7 +38,6 @@ class UpSample(nn.Module):
     def forward(self, x):
         x = self.up(x)
         return x
-
 
 class Cat(nn.Module):
     def __init__(self):

@@ -4,13 +4,18 @@ import torch.optim as optim
 import torch.nn as nn
 import torch
 import matplotlib.pyplot as plt
+import matplotlib.image as image
+import os
+import numpy as np
 train_image_dir = "data/membrane/train/image/"
 train_label_dir = "data/membrane/train/label/"
+test_image_dir = "data/membrane/test"
+
 #transformer = Compose([ToTensor, Normalize([0.5, ], [0.5, ])])
 unet_dataloader = Unetdataload(train_image_dir, train_label_dir,batchsize=1).getloader()
 # preview = Util.PICPreview(train_image_dir,train_label_dir,2,3)
 # preview.view()
-cuda = torch.device('cuda')
+cuda = torch.device('cpu')
 Unet = Unet().to(cuda)
 lr = 0.003
 optimizer = optim.Adam(Unet.parameters(), lr=lr)
@@ -31,11 +36,12 @@ for e in range(epochs):
             print(sum_loss / 2)
             sum_loss = 0.0
 
-test_pic = next(iter(unet_dataloader))
-plt.imshow(test_pic[0].squeeze().cpu().numpy())
+test_pic = image.imread(os.path.join(test_image_dir, "0.png"))
+plt.imshow(test_pic)
 plt.show()
-res = Unet(test_pic[0].cuda())
+test_pic = np.expand_dims(np.expand_dims(test_pic, 0), 0)
+res = Unet(torch.tensor(test_pic))
 res = torch.argmax(res, 1)
-res = res.squeeze().cpu().numpy()
+res = res.squeeze()
 plt.imshow(res)
 plt.show()
