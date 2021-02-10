@@ -3,6 +3,7 @@ import os
 from matplotlib import image
 from torch.utils.data import DataLoader, Dataset
 import numpy as np
+import torch
 
 
 class Unetdataload():
@@ -29,8 +30,9 @@ class PicDataset(Dataset):
 
     def __getitem__(self, idx):
         data_file_path = os.path.join(self.data_path, self.file_name_list[idx])
-        label_file_path = os.path.join(self.data_path, self.file_name_list[idx])
+        label_file_path = os.path.join(self.label_path, self.file_name_list[idx])
         data = image.imread(data_file_path)
         label = image.imread(label_file_path)
+        label = torch.tensor(label, dtype=torch.long)
         data = np.expand_dims(data,axis=0)
         return data, label
