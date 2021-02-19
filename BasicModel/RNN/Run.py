@@ -14,7 +14,7 @@ epochs = 200
 a0 = torch.randn((2 ** 5))
 model = RNN(2, 32, a0)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.004)
+optimizer = optim.Adam(model.parameters(), lr=0.0004)
 
 for e in range(epochs):
     sum_loss = 0.0
