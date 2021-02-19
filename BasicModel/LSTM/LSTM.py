@@ -42,17 +42,13 @@ class LSTM(nn.Module):
     #     for i in range(sequence_len):
     #         y, c = self.lstm_cell_1(x[:, i, :], y, c)
     #     return y, c
-    def __init__(self, in_size,hidden_size, out_size):
+    def __init__(self, in_size, hidden_size, out_size):
         super(LSTM, self).__init__()
-        self.lstm_cell_1 = nn.RNN(in_size, hidden_size,2)
-        self.fc = nn.Linear(hidden_size, out_size )
+        self.lstm_cell_1 = nn.LSTM(in_size, hidden_size)
+        self.fc = nn.Linear(hidden_size, out_size)
 
-    def forward(self, x, h0, c0):
-        sequence_len = x.shape[1]
-        c = c0
-        y = h0
-        x = x.permute(1,0,2)
+    def forward(self, x):
+        x = x.permute(1, 0, 2)
         y, c = self.lstm_cell_1(x)
-        y = self.fc(y[-1,:,:])
+        y = self.fc(y[-1, :, :])
         return y
-
