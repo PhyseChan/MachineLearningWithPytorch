@@ -1,6 +1,5 @@
 import torchvision.datasets.mnist as mnist
 from torch.utils.data import DataLoader, Dataset
-import numpy as np
 from torchvision.transforms import Compose, ToTensor, Normalize
 
 class MnistReader():
