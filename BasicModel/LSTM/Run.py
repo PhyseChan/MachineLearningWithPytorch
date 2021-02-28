@@ -1,4 +1,4 @@
-from MinstDataLoader import MnistReader
+from Utils.DataLoader import MnistReader
 import torch.optim as optim
 import torch.nn as nn
 from LSTM import LSTM
