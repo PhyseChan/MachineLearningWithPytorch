@@ -9,7 +9,7 @@ class MnistReader():
         self.training_data = mnist.MNIST("../data/", train=True, transform=transformer, download=True)
         self.test_data = mnist.MNIST("../data/", train=False, transform=transformer, download=True)
 
-    def dataloader(self, batch_size_trian=10, batch_size_test=10):
+    def getdataloader(self, batch_size_trian=10, batch_size_test=10):
         training_loader = DataLoader(self.training_data,batch_size_trian,shuffle=True)
         test_loader = DataLoader(self.test_data, batch_size_test)
         return training_loader, test_loader
