@@ -17,7 +17,7 @@ class RNN_cell(tr.nn.Module):
         """
         a = self.wa(a)
         x = self.wx(x)
-        return x + a, x
+        return x + a, a+x
 
 
 class RNN(tr.nn.Module):
@@ -38,5 +38,4 @@ class RNN(tr.nn.Module):
         for i in range(sequence_len):
             xi, a = self.rnn_cell(x[i], a)
             xi = tr.tanh(xi)
-            res_x.append(xi)
-        return res_x, a
+        return xi, a

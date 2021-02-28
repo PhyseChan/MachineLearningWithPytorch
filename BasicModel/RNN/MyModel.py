@@ -11,5 +11,5 @@ class MyModel(tr.nn.Module):
 
     def forward(self, x, a):
         x, a = self.rnn(x, a)
-        x = self.fc(x[-1])
+        x = self.fc(x)
         return x, a

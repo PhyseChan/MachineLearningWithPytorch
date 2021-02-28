@@ -11,10 +11,10 @@ dataloader = MnistReader()
 train_loader, test_loader = dataloader.getdataloader(batch_size_trian=batch_size_trian, batch_size_test=batch_size_test)
 
 epochs = 1
-a = torch.zeros(1,batch_size_trian, 128)
+a = torch.zeros(batch_size_trian, 128)
 model = MyModel(28, 128, 10)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.01)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 for e in range(epochs):
     sum_loss = 0.0
@@ -43,7 +43,7 @@ for _, item in enumerate(test_loader):
     data = data.permute(1, 0, 2)
     pred = model(data, a)
     test_label_list += label.tolist()
-    test_predict_list += pred.tolist()
+    test_predict_list += torch.argmax(pred[0], dim=2).squeeze().tolist()
 
 accuracy = metrics.accuracy_score(test_predict_list,test_label_list)
 precision = metrics.precision_score(test_predict_list,test_label_list,average='macro')
