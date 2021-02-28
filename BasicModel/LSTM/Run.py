@@ -6,7 +6,7 @@ import torch
 from sklearn import metrics
 import numpy as np
 
-training_loader, test_loader = MnistReader().dataloader(batch_size_trian= 50)
+training_loader, test_loader = MnistReader().getdataloader(batch_size_trian= 50)
 
 epochs = 1
 model = LSTM(28, 32,10)
