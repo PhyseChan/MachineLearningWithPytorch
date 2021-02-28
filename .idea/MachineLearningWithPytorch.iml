@@ -6,6 +6,10 @@
       <sourceFolder url="file://$MODULE_DIR$/Image segmentation/U-net" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Image segmentation/U-net/.ipynb_checkpoints" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Image segmentation/U-net/unet_model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BasicModel" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BasicModel/RNN" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BasicModel/LSTM" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BasicModel/Utils" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (MachineLearning)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
