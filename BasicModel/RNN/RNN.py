@@ -1,6 +1,5 @@
 import torch as tr
-import numpy as np
-
+import math
 
 class RNN_cell(tr.nn.Module):
     def __init__(self, input_size, output_size):
@@ -17,16 +16,20 @@ class RNN_cell(tr.nn.Module):
         """
         a = self.wa(a)
         x = self.wx(x)
-        return x + a, a+x
+        return x + a, a + x
 
 
 class RNN(tr.nn.Module):
-    def __init__(self, input_size, output_size):
+    def __init__(self, input_size, output_size, model='rnn_cell'):
         super(RNN, self).__init__()
-        self.rnn_cell = RNN_cell(input_size, output_size)
+        if model == 'rnn_cell':
+            self.rnn_cell = RNN_cell(input_size, output_size)
+        elif model == 'rnn_cell_no_module':
+            self.rnn_cell = RNN_cell_no_module(input_size, output_size)
+        else:
+            raise AttributeError
 
     def forward(self, x, a=None):
-        res_x = []
         """
             B: batch size
             N: the size of features
@@ -39,3 +42,23 @@ class RNN(tr.nn.Module):
             xi, a = self.rnn_cell(x[i], a)
             xi = tr.tanh(xi)
         return xi, a
+
+
+class RNN_cell_no_module(tr.nn.Module):
+    def __init__(self, input_size, output_size):
+        super(RNN_cell_no_module, self).__init__()
+        self.output_size = output_size
+        std = 1.0 / math.sqrt(output_size)
+        self.wa = tr.nn.Parameter(tr.nn.init.uniform_(tr.Tensor(output_size, output_size), -std, std))
+        self.wx = tr.nn.Parameter(tr.nn.init.uniform_(tr.Tensor(output_size, input_size), -std, std))
+        self.b = tr.nn.Parameter(tr.nn.init.uniform_(tr.Tensor(output_size), -std, std))
+
+    def para_init(self):
+        stdv = 1.0 / math.sqrt(self.output_size)
+        for weight in self.parameters():
+            weight.data.uniform_(-stdv, stdv)
+
+    def forward(self, x, a=None):
+        x = x @ self.wx.T + self.b
+        a = a @ self.wa.T
+        return x + a, x + a

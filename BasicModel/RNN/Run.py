@@ -14,8 +14,9 @@ epochs = 1
 a = torch.zeros(batch_size_trian, 128)
 model = MyModel(28, 128, 10)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
-
+optimizer = optim.Adam(model.parameters(), lr=0.0007)
+for item in enumerate(model.parameters()):
+    print(item[1].shape)
 for e in range(epochs):
     sum_loss = 0.0
     for _, item in enumerate(train_loader):
@@ -36,7 +37,7 @@ for e in range(epochs):
 model.eval()
 test_predict_list = []
 test_label_list = []
-a = torch.zeros(1,batch_size_test, 128)
+a = torch.zeros(1, batch_size_test, 128)
 for _, item in enumerate(test_loader):
     data, label = item
     data = data.squeeze()
@@ -45,10 +46,10 @@ for _, item in enumerate(test_loader):
     test_label_list += label.tolist()
     test_predict_list += torch.argmax(pred[0], dim=2).squeeze().tolist()
 
-accuracy = metrics.accuracy_score(test_predict_list,test_label_list)
-precision = metrics.precision_score(test_predict_list,test_label_list,average='macro')
-recall = metrics.recall_score(test_predict_list,test_label_list,average='macro')
-f1 = metrics.f1_score(test_predict_list,test_label_list,average='macro' )
+accuracy = metrics.accuracy_score(test_predict_list, test_label_list)
+precision = metrics.precision_score(test_predict_list, test_label_list, average='macro')
+recall = metrics.recall_score(test_predict_list, test_label_list, average='macro')
+f1 = metrics.f1_score(test_predict_list, test_label_list, average='macro')
 print("accuracy: {:f}".format(accuracy))
 print("precision: {:f}".format(precision))
 print("recall: {:f}".format(recall))
