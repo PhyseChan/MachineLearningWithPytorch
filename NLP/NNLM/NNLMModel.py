@@ -1,24 +1,20 @@
-import nltk
+
 import numpy as np
 import torch as tr
 
-data_np = np.load("../dataset/quora_pair/train.npy",allow_pickle=True)
-print(data_np[0])
 
-def buildWordIdx(dataset):
-    word_set = set()
-    for items in dataset:
-        for item in items:
-            for word in item:
-                word_set.add(word)
-    word2idx = dict(enumerate(word_set))
-    idx2word = dict([(i[1],i[0]) for i in enumerate(word2idx.items())])
-    return word2idx, idx2word
 
 class NNLM(tr.nn.Module):
-    def __init__(self,input_size, repr_size=50):
-        self.onehot2rep = tr.nn.Linear(input_size, repr_size)
-        self.rep2onehot = tr.nn.Linear(repr_size, input_size)
+    def __init__(self, vocab_size, repr_size=20, num_words=5):
+        self.c = tr.nn.Embedding(vocab_size, repr_size)
+        self.h = tr.nn.Parameter(tr.randn(repr_size * num_words, vocab_size))
+        self.u = tr.nn.Parameter(tr.randn(repr_size * num_words, vocab_size))
+        self.w = tr.nn.Parameter(tr.randn(repr_size * num_words, vocab_size))
+        self.b = tr.nn.Parameter(tr.rand(vocab_size))
+        self.d = tr.nn.Parameter(tr.rand(vocab_size))
+        self.tanh = tr.nn.Tanh()
 
     def forward(self, x):
-        respre
+        x = self.c(x)
+        x = x.view(1, -1)  # (num_words*repr, 1)
+        return self.b + tr.mm(x, self.w) + tr.mm(self.u, self.tanh(self.d + tr.mm(x, self.h)))
