@@ -11,6 +11,9 @@
       <sourceFolder url="file://$MODULE_DIR$/BasicModel/LSTM" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BasicModel/Utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BasicModel/Attention" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/NLP" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/NLP/NNLM" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/NLP/Word2vec" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (MachineLearning)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
