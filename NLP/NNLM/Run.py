@@ -12,8 +12,8 @@ nnlmdataset = NNLMDataset(processed_data, word2idx,idx2word)
 nnlmdataloader = DataLoader(nnlmdataset, batch_size=200)
 word_size = len(word2idx)
 model = NNLM(word_size,hidden_size=300)
-epochs = 20
-lr = 0.1
+epochs = 50
+lr = 0.01
 print_each = 200
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=lr)
